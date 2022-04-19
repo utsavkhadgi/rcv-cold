@@ -3,9 +3,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-
-from api.movie.models import Movie, Genres
+# from api.movie.models import Movie, Genres
+from models.movie import Movie, Genres
 from api.movie.serializers import GenreSerializer, MovieSerializer
+from .services import getAllMovie,filterMovie, singleMovie, getGenre
 
 # Create your views here.
 
@@ -34,18 +35,18 @@ class MovieViewSet(ViewSet):
     def list(self, request):
         query = request.query_params.get("title")
         if query is not None:
-            queryset = Movie.objects.filter(title__icontains=query)
+            queryset = filterMovie(query)
             serializer = MovieSerializer(
                 queryset, many=True, context={'request': request})
             return Response(serializer.data)
-        queryset = Movie.objects.all()
+        queryset = getAllMovie()
         serializer = MovieSerializer(queryset, many=True,
                                      context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
-            queryset = Movie.objects.get(pk=pk)
+            queryset = singleMovie(pk)
         except Movie.DoesNotExist:
             return Response({"error": "Movie Not found"}, status=404)
         serializer = MovieSerializer(
@@ -67,7 +68,7 @@ class MovieViewSet(ViewSet):
         return Response(serializer.data)
 
     def update(self, request, pk=None):
-        movie = Movie.objects.get(pk=pk)
+        movie = singleMovie(pk)
         data = request.data
         # movie.poster.delete(save=True)
         serializer = MovieSerializer(
@@ -84,7 +85,7 @@ class MovieViewSet(ViewSet):
 
     def destroy(self, request, pk=None):
         try:
-            movie = Movie.objects.get(pk=pk)
+            movie = singleMovie(pk)
         except Movie.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         movie.delete()
@@ -94,7 +95,7 @@ class MovieViewSet(ViewSet):
 
 
 class GenresViewSet(ModelViewSet):
-    queryset = Genres.objects.all()
+    queryset = getGenre()
     serializer_class = GenreSerializer
 
     def get_serializer_context(self):

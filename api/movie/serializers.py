@@ -2,7 +2,8 @@ from asyncio.windows_events import NULL
 from re import A
 from rest_framework import serializers
 
-from api.movie.models import Movie, Genres
+# from api.movie.models import Movie, Genres
+from models.movie import Movie,Genres
 
 
 class MovieListSerializer(serializers.ModelSerializer):
