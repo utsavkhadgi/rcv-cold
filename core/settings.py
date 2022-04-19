@@ -33,8 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.home',  # Enable the inner home (home)
     'module_products',
-    'myapi.apps.MyapiConfig',
+    'api.movie.apps.MovieConfig',
     'rest_framework',
+    
 ]
 
 MIDDLEWARE = [
