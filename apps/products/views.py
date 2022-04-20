@@ -1,5 +1,4 @@
 import imp
-from django.shortcuts import render
 
 from itertools import product
 from multiprocessing import context
@@ -14,7 +13,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect  
-# from models.product import Product
 from models.products import Products
 from .services import delete, getAllProduct, getSingleProduct, insert, update
 from django.contrib import messages
