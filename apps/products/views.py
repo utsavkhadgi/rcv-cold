@@ -15,7 +15,7 @@ from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, redirect  
 # from models.product import Product
-from .models import Products
+from models.products import Products
 from .services import delete, getAllProduct, getSingleProduct, insert, update
 from django.contrib import messages
 from django.core.paginator import Paginator

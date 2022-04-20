@@ -1,6 +1,6 @@
 import imp
 from sys import getallocatedblocks
-from .models import Products
+from models.products import Products
 # from models.product import Product
 
 def getAllProduct():
